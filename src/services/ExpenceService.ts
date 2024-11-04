@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable } from 'rxjs'
-import { ExpenseData } from '@/interfaces';
+import { ExpenseData } from '@/types';
 
 class ExpenseService {
     private static instance: ExpenseService;
