@@ -1,30 +1,59 @@
+// import express from 'express';
+// import UserRoutes from './routes/userRoutes.mjs';
+
+// class Server {
+//     constructor() {
+//         this.app = express();
+//         this.port = process.env.PORT || 3000;
+//         this.initializeMiddleware();
+//         this.initializeRoutes();
+//     }
+
+//     initializeMiddleware() {
+//         this.app.use(express.json());
+//     }
+
+//     initializeRoutes() {
+//         this.app.use('/', (req, res) => {
+//             res.send('Welcome to docker world!')
+//         })
+//         new UserRoutes(this.app);
+//     }
+
+//     start() {
+//         this.app.listen(this.port, () => {
+//             console.log(`Server listening on port ${this.port}`);
+//         });
+//     }
+// }
+
+// const server = new Server();
+// server.start();
+
 const express = require('express'),
     path = require('path'),
     bodyParser = require('body-parser'),
+    cors = require('cors'),
     db = require('./models');
 
 const port = 3000
 const app = express()
+
+app.use(cors());
+
+const corsOptions = {
+    origin: 'http://localhost:5173', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'], 
+};
+
+app.use(cors(corsOptions));
 
 app.use(bodyParser.json())
 
 db.sequelize.sync().then(() => {
     console.log('Database connected');
 });
-
-// sequelize
-//     .authenticate()
-//     .then(() => {
-//         console.log('Connection to PostgreSQL has been established successfully.');
-//         return sequelize.sync(); // Sync all models with the database
-//     })
-//     .then(() => {
-//         console.log('All models were synchronized successfully.');
-//     })
-//     .catch((error) => {
-//         console.error('Unable to connect to the database:', error);
-//     });
-
 
 app.get('/', (req, res) => {
     res.send('Welcome to docker world!')
