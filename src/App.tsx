@@ -1,9 +1,9 @@
 import React from "react";
-import { Category, Expense } from "@/features";
+import { CategoryList, Expense } from "@/features";
 
 const App: React.FC = () => {
   return <div className="mx-auto max-w-md">
-    <Category />
+    <CategoryList />
     <Expense />
   </div>
 }
